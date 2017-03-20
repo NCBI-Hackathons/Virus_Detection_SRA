@@ -16,4 +16,6 @@ Other notes
 - which aligner to use?
 	- need to ask the user
 
-## Estimate:
+## Estimate: 2
+## Priority: MUST
+
