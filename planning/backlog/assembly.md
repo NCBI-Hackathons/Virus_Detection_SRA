@@ -13,4 +13,6 @@ As a bioinformatician, I would like to generate a set of virus contigs from read
 Other thoughts
 
 - add handling of input as fasta or BAM
-## Estimate:
+
+## Estimate: 5
+## Priority: MUST
