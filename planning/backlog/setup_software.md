@@ -7,5 +7,6 @@
 - assembler MetaVelvet-SL?
 - cutadapt
 - prinseq?
+- Docker
 
 
