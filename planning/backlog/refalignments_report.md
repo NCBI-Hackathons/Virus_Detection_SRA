@@ -15,4 +15,6 @@ Other things to think about
 - what exactly does the user want in each column?
 - what metrics does user want calculated?
 
-## Estimate:
+## Estimate: 2
+## Priority: MUST
+
