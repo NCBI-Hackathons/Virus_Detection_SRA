@@ -17,4 +17,6 @@ There are a few ways of doing this, and it's not clear which is best.
 	- need to ask the user
 - use default options of the aligner?
 
-## Estimate:
+## Estimate: 2
+## Priority: Must
+
