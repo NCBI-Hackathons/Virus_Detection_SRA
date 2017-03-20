@@ -10,3 +10,4 @@ As a developer, I would like to install docker so I can start using it
 
 - Output: a docker installation
 
+## Estimate:

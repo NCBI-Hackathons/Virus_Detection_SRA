@@ -15,3 +15,5 @@ Other notes
 - need to set more relaxed alignment parameters (i.e. don't penalize mismatches as much)
 - which aligner to use?
 	- need to ask the user
+
+## Estimate:
