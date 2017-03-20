@@ -2,7 +2,7 @@
 
 This directory contains stories -- descriptions of workflow modules and their purpose, in the format:
 
-As a "<type of user>", I want "<some goal>" so that "<some reason>".
+As a TYPE_OF_USER, I want SOME_GOAL so that SOME_REASON.
 
 Paul (14 hrs)
 - software 2
