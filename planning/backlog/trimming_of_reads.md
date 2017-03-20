@@ -14,4 +14,7 @@ There are a few ways of doing this, and it's not clear which is best.
 
 - which tool to use? Cutadapt?
 - is there a way to predict adaptors with TagCleaner if user does not input a list of adaptors?
-## Estimate:
+
+## Estimate: 3
+## Priority: MUST
+
