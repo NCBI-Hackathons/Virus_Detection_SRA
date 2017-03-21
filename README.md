@@ -64,11 +64,12 @@ summarizebam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.sam -g viral.1.1.genomi
 ```
 
 ```perl
-# get number of alignments, align score and some quality information
-baminfo(\%ref, $bamfile, $remove);
+    my $avgdepth = $ref{$rid}{td} / $rlen;          # average depth per base for reference    
+    my $upos = $ref{$rid}{tp};
+    my $seqcov   = $upos / $rlen * 100;    # percent of reference length that is covered by at least one read
 
-# get total depth and total positions covered
-refdepth(\%ref, $bamfile);
+    my $nalign  = $ref{$rid}{nalign};
+    my $avgmapq = $ref{$rid}{mapq}/$nalign;
 ```
 
 *Module 4a: Adapter Trimming using cut adapt*
