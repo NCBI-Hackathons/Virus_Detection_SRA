@@ -61,8 +61,9 @@ if ($? > 0) {
 }
 
 my ($filename, $directories, $suffix) = fileparse($blastdb);
-my $samfile = "$srr.$filename.sam";
-my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapextend $gapextend -penalty $penalty -word_size $wordsize -score $score > $samfile";
+#my $samfile = "$srr.$filename.sam";
+my $bamfile = "$srr.$filename.bam";
+my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapextend $gapextend -penalty $penalty -word_size $wordsize -score $score | samtools view -bS - | samtools sort -o $bamfile";
 
 print "Running command: $command\n";
 `time $command`;
