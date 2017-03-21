@@ -4,6 +4,7 @@ use warnings;
 use Getopt::Long;
 use Bio::SeqIO;
 use Data::Dumper;
+use Cwd;
 
 my $bamfile = '';
 my $genome  = '';
@@ -12,19 +13,19 @@ my @annots  = ();        # these are additional annotations that will get prepen
 my $pass = 0;
 my $minuniqpos = 150;
 my $minalign   = 50;
-my $ignoredups = 0;
 my $remove = 0;          # remove reads that have the same alignment score in the 2nd best hit (XS field)
 my $useAccVer = 0;       # use the Acc.Ver in the fasta identifier as the reference identifier
 my @tags = qw/AS NM XS/;    # tracking AlignmentScore and NumberMismatches
+my $dir = getcwd;
 GetOptions('annots|a=s{,}' => \@annots,
           'file|f=s'       => \$bamfile,
           'genome|g=s'     => \$genome,
-          'ignoredups|d'   => \$ignoredups,
           'minuniqpos|u=i' => \$minuniqpos,
           'minalign|n=i'   => \$minalign,
           'pass|p'         => \$pass,
           'remove|r'       => \$remove,
           'useAccVer|v'    => \$useAccVer,
+          'directory|d=s'  => \$dir,
           );
 if ($bamfile eq ""){ print "Please supply '-f BAMFILE' on command line\n"; exit; }
 if ($genome eq "") { print "Please supply '-g GENOME' on command line\n"; exit; }
@@ -55,17 +56,17 @@ baminfo(\%ref, $bamfile, $remove);
 # get samtools depth information for file
 refdepth(\%ref, $bamfile);
 
-#print Dumper(\%ref),"\n";
-#exit;
-
 #
 # output
 #
-print "id\tvname\tvlen\tseqcov\tavgdepth\taligns\tavgMAPQ\tavgScore\tavgEditDist";
+my $out;
+my $outputfile = "$dir/$bamfile.summarize.tsv";
+open ($out, ">", $outputfile) or die ("Can't open $outputfile\n");
+print $out "id\tvname\tvlen\tseqcov\tavgdepth\taligns\tavgMAPQ\tavgScore\tavgEditDist";
 if ($pass) {
-  print "\tpass";
+  print $out "\tpass";
 }
-print "\n";
+print $out "\n";
 
 foreach my $rid (keys %ref) {
   if (exists $ref{$rid}{nalign}) {
@@ -84,12 +85,12 @@ foreach my $rid (keys %ref) {
       push(@tag_avg, $ref{$rid}{tags}{$t}{total} / $ref{$rid}{tags}{$t}{count});
     }
         
-    print join("\t", @annots, $rid, $ref{$rid}{name}, $rlen, $seqcov, $avgdepth, $nalign, $avgmapq, @tag_avg);
+    print $out join("\t", @annots, $rid, $ref{$rid}{name}, $rlen, $seqcov, $avgdepth, $nalign, $avgmapq, @tag_avg);
     if ($pass) {
       my $toPrint = ($nalign >= $minalign && $upos >= $minuniqpos) ? "\t1" : "\t0";
-      print $toPrint;
+      print $out $toPrint;
     }
-    print "\n";
+    print $out "\n";
   }
 }
 
@@ -124,7 +125,6 @@ sub baminfo {
         
     my ($qname, $flag, $rid, $pos, $mapq, $cigar, $rnext, $pnext, $tlen, $seq, $qual, @rest) = split (/\t/,$_);
     next if ($rid eq '*');    # unmapped read
-    next if ($ignoredups && $flag & 1024);   # read is PCR or optical duplicate
 
     my $keep = 1;
     my %tagvalue;
