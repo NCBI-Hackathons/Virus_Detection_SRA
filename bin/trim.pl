@@ -2,6 +2,7 @@
 use warnings;
 use strict;
 use Getopt::Long;
+use Cwd;
 
 #reads; NO SUPPORT FOR PAIRED READS
 
@@ -13,11 +14,15 @@ my @prime3 = qw/AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
 my $minlen = 30;
 my $rmdefadapters = 0;   # not implemented
 my $outputfile;
+my $dir = getcwd;
+my $seqs;
 GetOptions("fiveprime|g=s"    => \@prime5,
            "threeprime|a=s"   => \@prime3,
            "minlen|m=i"        => \$minlen,
            "rm-def-adapters|r" => \$rmdefadapters,
            "outputfile|o=s"    => \$outputfile,
+           "directory|d=s"     => \$dir,
+           "seqs|f=s"          => \$seqs,
            );
 
 my $usage = <<USAGE;
@@ -30,7 +35,6 @@ $0 [options] FASTAFILE
     -r    NOT SUPPORTED. If supplied, default adapters (TruSeq) will be removed and not searched for.
 USAGE
 
-my $seqs = shift;
 die $usage if (!$seqs);
 
 # build cutadapt command line
@@ -49,8 +53,9 @@ foreach (@prime3) {
 $threeprime = join (" ", @tmp);
 
 $outputfile //= "$seqs.cutadapt.fa";
-
-my $command = "cutadapt $fiveprime $threeprime -m $minlen -o $outputfile $seqs > $seqs.cutadapt.out 2>&1";
+$outputfile = "$dir/$outputfile";
+my $logfile    = "$dir/$seqs.cutadapt.out";
+my $command = "cutadapt $fiveprime $threeprime -m $minlen -o $outputfile $seqs > $logfile 2>&1";
 print "Running command: $command\n";
 `time $command`;
 
