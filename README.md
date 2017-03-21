@@ -75,9 +75,14 @@ summarizebam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.sam -g viral.1.1.genomi
     my $avgmapq = $ref{$rid}{mapq}/$nalign;
 ```
 
-*Module 4a: Adapter Trimming using cut adapt*
+Module 4a: Adapter Trimming using cut adapt
 
-+ Usage: User defines adapters
++ Usage: User defines adapters (also uses default set of Illumina TruSeq adapters)
++ [trim.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/trim.pl)
+
+```bash
+trim.pl -g GCTCCTTTTTCTTTTTT -a CCCCCCCCCCCCCCC SRR073726.fa
+```
 
 *Module 4b: Adapter Prediction and Trimming using tag cleaner*
 
@@ -89,7 +94,7 @@ Module 5: Contig assembly
 + [assembly.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/assembly.pl)
 
 ```bash
-assembly.pl SRR073726.fa
+assembly.pl SRR073726.fa.cutadapt.fa
 ```
 
 ```perl
@@ -97,11 +102,17 @@ my $command = "ABYSS -k 25 -o $fasta.contigs $fasta > $fasta.abyss.out 2>&1";
 `$command`;
 ```
 
-*Module 6: Feeding contigs back into a local database*
++ Resulting output file is SRR073726.fa.cutadapt.fa.contigs
 
-*Module 7: Feeding contigs back into a shared database*
+*Module 6: Build manager to crawl through set of SRRs
 
-+ CWL-based management console keeps track of what has been searched and contributed
++ the set of SRRs are either manually given by user or the result of SRA search criteria given by user
++ feed contigs back into a local database
++ keeps track of what has been searched and contributed
+
+*Module 7: CWL-based management console*
+
++ Graphical user interface
 
 
 ## Sample Results
