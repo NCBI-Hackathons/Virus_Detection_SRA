@@ -10,6 +10,8 @@ Module 1a: Defaut (strict) Parameters (Known Viruses)
 
 + [align_SRR_to_references.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/align_SRR_to_references.pl)
 
++ [SRR073726 RNA-seq prostate cancer cell line](https://www.ncbi.nlm.nih.gov/sra/?term=SRR073726) contains HPV18
+
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/refseq/release/viral/viral.1.1.genomic.fna.gz
 gunzip viral.1.1.genomic.fna.gz
