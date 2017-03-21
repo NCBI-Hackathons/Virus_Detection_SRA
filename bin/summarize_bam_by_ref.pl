@@ -39,7 +39,7 @@ while (my $seq = $seqio->next_seq) {
   my $rid = $seq->primary_id;
   if ($useAccVer) {
     $rid =~ /\|(\S+)\|$/;
-    $rid = $1;
+    $rid = $1 unless (not defined $1);
   }
   $ref{$rid}{name} = $seq->description;
   $ref{$rid}{len}  = $seq->length;
