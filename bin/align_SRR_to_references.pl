@@ -3,8 +3,10 @@
 use strict;
 use warnings;
 use Getopt::Long;
-use File::Basename;
+use File::Basename; # core
+use Cwd;  # core
 
+    
 my ($srr, $blastdb) = ("", "");
 
 # magicblast defaults
@@ -16,7 +18,7 @@ my ($srr, $blastdb) = ("", "");
 #   score: 20 => 24
 my ($gapextend, $penalty, $wordsize, $score) = (4, -4, 20, 24);
 my $threads = 2;
-
+my $dir = getcwd;
 GetOptions ("srr|s=s"  => \$srr,
             "blastdb|b=s" => \$blastdb,
             "gapextend|g=i" => \$gapextend,
@@ -24,10 +26,11 @@ GetOptions ("srr|s=s"  => \$srr,
             "wordsize|w=i" => \$wordsize,
             "score|c=i" => \$score,
             "threads|t=i" => \$threads,
+            "directory|d=s" => \$dir,
             );
 
 my $usage = <<USAGE;
-$0 [-g|-p|-w|-c] -s SRR -b BLASTDB
+$0 [-g|-p|-w|-c] -d -s SRR -b BLASTDB
 
       REQUIRED:
       -s|srr        SRR accession number (can be DRR or ERR)
@@ -37,7 +40,7 @@ $0 [-g|-p|-w|-c] -s SRR -b BLASTDB
       -g|gapextend  default: 4  (magicblast default is 8)
       -p|penalty    default: -4 (magicblast default is -8)
       -w|wordsize   default: 20 (magicblast default is 16)
-      -s|score      default: 24 (magicblast default is 20)
+      -c|score      default: 24 (magicblast default is 20)
 
 DESCRIPTION:
 When you create Blast database of your sequences, make sure to use the '-parse_seqids' option to preserve the sequence identifiers (see 'makeblastdb -help')
@@ -63,7 +66,7 @@ if ($? > 0) {
 my ($filename, $directories, $suffix) = fileparse($blastdb);
 #my $samfile = "$srr.$filename.sam";
 my $bamfile = "$srr.$filename.bam";
-my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapextend $gapextend -penalty $penalty -word_size $wordsize -score $score | samtools view -bS - | samtools sort -o $bamfile";
+my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapextend $gapextend -penalty $penalty -word_size $wordsize -score $score | samtools view -bS - | samtools sort -o $dir/$bamfile";
 
 print "Running command: $command\n";
 `time $command`;
