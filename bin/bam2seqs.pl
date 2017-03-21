@@ -10,7 +10,7 @@ my $bamfile = "";
 GetOptions("t=s" => \$format,
            "prefix=s" => \$prefix,
            "nopaired" => \$nopaired,
-           "bamfile|b" => \$bamfile,
+           "bamfile|b=s" => \$bamfile,
           );
 
 die "Please supply a bamfile (-b)\n" if (!$bamfile);
