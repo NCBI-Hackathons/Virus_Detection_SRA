@@ -38,7 +38,7 @@ $0 [-g|-p|-w|-c] -s SRR -b BLASTDB
       -p|penalty    default: -4 (magicblast default is -8)
       -w|wordsize   default: 20 (magicblast default is 16)
       -s|score      default: 24 (magicblast default is 20)
-      
+
 DESCRIPTION:
 When you create Blast database of your sequences, make sure to use the '-parse_seqids' option to preserve the sequence identifiers (see 'makeblastdb -help')
 
@@ -65,6 +65,6 @@ my $samfile = "$srr.$filename.sam";
 my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapextend $gapextend -penalty $penalty -word_size $wordsize -score $score > $samfile";
 
 print "Running command: $command\n";
-`$command`;
+`time $command`;
 
 exit 0;

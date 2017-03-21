@@ -3,36 +3,6 @@ use warnings;
 use strict;
 use Getopt::Long;
 
-=head
-
-preprocess_ncores.sh "$TEMP_IN" "$ADAPTERSET" S 15 60 30 "$THREADS"
-$scriptname <FASTQfile> <adapter_set> <S/I quality> <quality_cutoff> <entropy_cutoff> <length cutoff; 0 for no length cutoff> <# of cores>"
-
-preprocess.sh
-$scriptname <FASTQfile> <adapter_set> <S/I quality> <quality_cutoff> <entropy_cutoff> <length_cutoff; 0 for no length_cutoff>"
-             inputfile  adapter_set     quality
-cutadapt_quality.sh "$inputfile" "$quality" "$adapter_set"
-cutadapt_quality.csh <FASTQfile> <quality S/I> <adapter_set>"
-
-#    Illumina Adapter 1 (-a seq based on Illumina bulletin; using -g revcom similar to Surpi)
-#             Adapter 2 (-a seq based on Illumina bulletin; using -a revcom exactly like Surpi)
-echo "Trimming Primer B + Primer K pubmed 22855479 + Illumina TruSeq adapters"
-cutadapt
--g GTTTCCCAGTCACGATA    -a TATCGTGACTGGGAAAC \
-         -g GACCATCTAGCGACCTCCAC -a GTGGAGGTCGCTAGATGGTC \
-
-
-          -o "${inputfile%.*}".cutadapt.fastq $inputfile
-elif [[ $adapter_set = prepx ]]; then
-
-
--x ADAPTER ... (5' end) -> '-g'
--y ADAPTER ... (3' end -> '-a'
-
--g GCTCCTTTTTCTTTTTT,TCGGGGGGGGTTTTT -a CCCCCCCCCCCCCCC,GGGGGGGGGGGGGGGGG
-
-=cut
-
 #reads; NO SUPPORT FOR PAIRED READS
 
 my @prime5 = qw/TGACTGGAGTTCAGACGTGTGCTCTTCCGATCT/;
