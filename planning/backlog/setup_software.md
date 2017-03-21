@@ -5,6 +5,7 @@
 - Docker
   - sratoolkit
   - samtools
+  - bioperl
   - magicblast
   - cutadapt/tagcleaner
   - assembler MetaVelvet-SL?
