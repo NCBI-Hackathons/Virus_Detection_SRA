@@ -6,16 +6,17 @@ Module 1: Viral RefSeq MagicBLASTer
 
 Module 1a: Defaut (strict) Parameters (Known Viruses)
 
-+ Get viral RefSeq, makeblastdb, initiate magicBLAST
-
-+ [align_SRR_to_references.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/align_SRR_to_references.pl)
-
-+ [SRR073726 RNA-seq prostate cancer cell line](https://www.ncbi.nlm.nih.gov/sra/?term=SRR073726) contains HPV18
++ Get viral RefSeq, makeblastdb, initiate magicBLAST[SRR073726](https://www.ncbi.nlm.nih.gov/sra/?term=SRR073726) RNA-seq prostate cancer cellline contains HPV18
 
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/refseq/release/viral/viral.1.1.genomic.fna.gz
 gunzip viral.1.1.genomic.fna.gz
 makeblastdb -dbtype nucl -in viral.1.1.genomic.fna -out viral.1.1.genomic -parse_seqids  # 3 seconds
+```
+
++ [align_SRR_to_references.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/align_SRR_to_references.pl)
+
+```bash
 align_SRR_to_references.pl -b viral.1.1.genomic -s SRR073726 &
 ```
 
