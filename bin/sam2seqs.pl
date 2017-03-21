@@ -6,10 +6,14 @@ use Getopt::Long;
 my $nopaired = 0;
 my $format   = "fastq";
 my $prefix   = "foo";         # foo_1.fq, foo_2.fq, foo.fq
+my $bamfile = "";
 GetOptions("t=s" => \$format,
            "prefix=s" => \$prefix,
            "nopaired" => \$nopaired,
+           "bamfile|b" => \$bamfile,
           );
+
+die "Please supply a bamfile (-b)\n" if (!$bamfile);
 
 my %preads;   # cache reads until you have both reads of a pair so you can output them in order
 my ($one, $two, $single);
@@ -21,7 +25,8 @@ unless ($nopaired) {
 }
 open ($single, ">", $prefix . $suffix) or die "";
 
-while (<>) {
+open(my $in, "samtools view $bamfile | ");
+while (<$in>) {
    next if /^@/;
    chomp;
    my ($id, $flag, $rname, $seq, $qual) = (split /\t/, $_)[0,1,2,9,10];
@@ -56,6 +61,7 @@ while (<>) {
    }
 
 }
+close ($in);
 
 unless ($nopaired) {
   # for all the paired reads that didn't have a mate in the BAM file, need to
