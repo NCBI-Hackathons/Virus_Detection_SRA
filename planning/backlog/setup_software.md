@@ -8,7 +8,8 @@
   - bioperl
   - magicblast
   - cutadapt/tagcleaner
-  - assembler MetaVelvet-SL?
+  - brew (needed for abyss)
+  - abyss assembler 
 
 ## Estimate: 2
 ## Priority: MUST
