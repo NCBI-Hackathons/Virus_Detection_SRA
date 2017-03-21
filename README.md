@@ -112,6 +112,8 @@ Module 3: Report of alignments
 | NC_032111.1 | BeAn 58058 | 163005 | 0.4 | 3.0 | 18,741 | 255 | 22.7 | 0.3 | 
 | NC_001357.1 | HPV18 | 7857 | 19.8 | 48.5 | 9,658 | 255 | 39.1 | 0.05 |
 
++ [BeAn](https://www.ncbi.nlm.nih.gov/nuccore/NC_032111)
+
 Module 5: Contig assembly
 
 + Longest contig was 600bp. [BLASTN hit](http://bit.ly/2nwKiQL) was to HPV18 (as expected).
