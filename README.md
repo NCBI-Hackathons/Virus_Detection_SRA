@@ -40,10 +40,11 @@ Module 1c: Using a local database
 
 Module 2: Extract reads from samfiles
 
-+ [sam2fq.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/sam2seqs.pl)
++ [sam2seqs.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/sam2seqs.pl)
++ using '--nopaired' option since paired end reads are not supported yet
 
 ```bash
-sam2seqs.pl -t fasta --nopaired SRR073726.viral.1.1.genomic.sam 
+sam2seqs.pl -t fasta --nopaired --prefix SRR073726 SRR073726.viral.1.1.genomic.sam 
 ```
 
 ```perl
@@ -61,9 +62,10 @@ sam2seqs.pl -t fasta --nopaired SRR073726.viral.1.1.genomic.sam
 Module 3: Generate report from step 1
 
 + [summarize_sam_by_ref.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/summarize_sam_by_ref.pl)
++ using the '-v' option to only use the accession.version identifier in Viral.genomic.fna when looking for reference sequence identifier matches in the SAM file
 
 ```bash
-summarizebam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.sam -g viral.1.1.genomic.fna > summarize.tsv
+summarize_sam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.sam -g viral.1.1.genomic.fna > SRR073726.viral.1.1.genomic.sam.summarize.tsv
 ```
 
 ```perl
@@ -88,9 +90,8 @@ trim.pl -g GCTCCTTTTTCTTTTTT -a CCCCCCCCCCCCCCC SRR073726.fa
 
 + Usage: No need to define adapters
 
-Module 5: Contig assembly
+Module 5: Contig assembly with Abyss2
 
-+ Abyss2
 + [assembly.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/assembly.pl)
 
 ```bash
@@ -102,9 +103,9 @@ my $command = "ABYSS -k 25 -o $fasta.contigs $fasta > $fasta.abyss.out 2>&1";
 `$command`;
 ```
 
-+ Resulting output file is SRR073726.fa.cutadapt.fa.contigs
++ Resulting output file is ```SRR073726.fa.cutadapt.fa.contigs```
 
-*Module 6: Build manager to crawl through set of SRRs
+*Module 6: Build manager to crawl through set of SRRs*
 
 + the set of SRRs are either manually given by user or the result of SRA search criteria given by user
 + feed contigs back into a local database
