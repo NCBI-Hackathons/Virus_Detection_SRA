@@ -40,10 +40,10 @@ Module 1c: Using a local database
 
 Module 2: Extract reads from samfiles
 
-+ [sam2fq.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/sam2fq.pl)
++ [sam2fq.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/sam2seqs.pl)
 
 ```bash
-~/local/lib/virus_Detection_SRA/bin/sam2fq.pl -t fasta --nopaired SRR073726.viral.1.1.genomic.sam 
+sam2seqs.pl -t fasta --nopaired SRR073726.viral.1.1.genomic.sam 
 ```
 
 ```perl
@@ -60,7 +60,7 @@ Module 2: Extract reads from samfiles
 
 Module 3: Generate report from step 1
 
-+ [summarizebam_by_ref.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/summarizebam_by_ref.pl)
++ [summarize_sam_by_ref.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/summarize_sam_by_ref.pl)
 
 ```bash
 summarizebam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.sam -g viral.1.1.genomic.fna > summarize.tsv
