@@ -1,0 +1,3 @@
+bam:
+  class: File
+  path: SRR073726.viral.1.1.genomic.bam
