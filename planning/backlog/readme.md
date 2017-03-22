@@ -11,3 +11,7 @@ Paul (14 hrs)
 - assembly 5
 - report 2
 
+Alex (2h)
+- software install in a docker image (DONE)
+- blast database in a docker image (?)
+
