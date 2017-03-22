@@ -6,7 +6,7 @@ use Getopt::Long;
 use File::Basename; # core
 use Cwd;  # core
 
-    
+
 my ($srr, $blastdb) = ("", "");
 
 # magicblast defaults
@@ -16,11 +16,15 @@ my ($srr, $blastdb) = ("", "");
 # for faster alignments:
 #   wordsize: 16 => 20
 #   score: 20 => 24
-my ($gapextend, $penalty, $wordsize, $score) = (4, -4, 20, 24);
+my ($gapextend, $penalty, $wordsize, $score); # #(4, -4, 20, 24);
+my $fast = 0;
+my $weak = 0;
 my $threads = 2;
 my $dir = getcwd;
 GetOptions ("srr|s=s"  => \$srr,
             "blastdb|b=s" => \$blastdb,
+            "fast"          => \$fast,
+            "weak"          => \$weak,
             "gapextend|g=i" => \$gapextend,
             "penalty|p=i" => \$penalty,
             "wordsize|w=i" => \$wordsize,
@@ -28,6 +32,15 @@ GetOptions ("srr|s=s"  => \$srr,
             "threads|t=i" => \$threads,
             "directory|d=s" => \$dir,
             );
+if ($fast) {
+  $wordsize = 20;
+  $score = 24;
+}
+
+if ($weak) {
+  $gapextend = 4;
+  $penalty = -4;
+}
 
 my $usage = <<USAGE;
 $0 [-g|-p|-w|-c] -d -s SRR -b BLASTDB
@@ -66,7 +79,7 @@ if ($? > 0) {
 my ($filename, $directories, $suffix) = fileparse($blastdb);
 #my $samfile = "$srr.$filename.sam";
 my $bamfile = "$srr.$filename.bam";
-my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapextend $gapextend -penalty $penalty -word_size $wordsize -score $score | samtools view -bS - | samtools sort -o $dir/$bamfile";
+my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads | samtools view -bS - | samtools sort -o $dir/$bamfile";
 
 print "Running command: $command\n";
 `time $command`;
