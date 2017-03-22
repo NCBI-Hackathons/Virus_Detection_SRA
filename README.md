@@ -1,4 +1,4 @@
-# Virus_Detection_SRA
+# SIDEARM	- your weapon in viral discovery. Sidearm searches the SRA database for viruses using the NCBI magic-blast tool.
 
 ## Workflow
 
