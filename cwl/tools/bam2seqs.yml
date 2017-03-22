@@ -3,4 +3,4 @@ nopaired: true
 prefix: SRR073726
 bamfile:
   class: File
-  path: SRR073726.mb.vrs.bam
+  path: SRR073726.viral.1.1.genomic.bam
