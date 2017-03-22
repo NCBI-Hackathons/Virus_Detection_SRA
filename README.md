@@ -1,6 +1,6 @@
-# SIDEARM	- Your weapon in viral discovery in metagenomes
+# SIDEARM	- Your weapon for viral discovery in metagenomes
 
-Sidearm searches the SRA database for viruses using the NCBI magic-blast tool. It generates a table describing the number of alignments to each virus and various metrics such as the sequence coverage and average depth. The reads aligning to virus are assembled into viral contigs to attempt to generate complete viral genomes.
+Sidearm searches the SRA database for viruses using the NCBI magicBLAST tool. It generates a table describing the number of alignments to each virus and various metrics such as the sequence coverage and average depth. The reads aligning to virus are assembled into viral contigs to attempt to generate complete viral genomes.
 
 ## Workflow
 
