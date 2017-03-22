@@ -1,0 +1,3 @@
+seqs:
+  class: File
+  path: SRR073726.fa.cutadapt.fa
