@@ -1,26 +1,38 @@
 cwlVersion: v1.0
 class: Workflow
 inputs:
-  bam: File
-# refs: File
+#  bam: File
+  refs: File
+  blastdb: string
+  srr: string
 
 outputs:
-  result:
+  report_tsv:
+    type: File
+    outputSource: summarizebam/outputfile
+  viral_contigs:
     type: File
     outputSource: assembly/contigs
 
 steps:
-#  summarizebam:
-#    run: summarize_bam_by_ref.cwl
-#    in:
-#      bamfile: bam
-#      genomefile: refs
-#    out: [outputfile]
+  alignsrr:
+    run: align_SRR_to_references
+    in:
+      srr: srr
+      blastdb: blastdb
+    out: [outputfile]
+
+  summarizebam:
+    run: summarize_bam_by_ref.cwl
+    in:
+      bamfile: alignsrr/outputfile
+      genomefile: refs
+    out: [outputfile]
 
   bam2seqs:
     run: bam2seqs.cwl
     in:
-      bamfile: bam
+      bamfile: alignsrr/outputfile
     out: [outputfile]
 
   trim:
