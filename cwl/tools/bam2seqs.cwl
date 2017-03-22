@@ -4,15 +4,15 @@ baseCommand: bam2seqs.pl
 arguments: ["-d", $(runtime.outdir)]
 inputs:
   format:
-    type: string
+    type: string?
     inputBinding:
       prefix: -t
   nopaired:
-    type: boolean
+    type: boolean?
     inputBinding:
       prefix: --nopaired
   prefix:
-    type: string
+    type: string?
     inputBinding:
       prefix: --prefix
   bamfile:
