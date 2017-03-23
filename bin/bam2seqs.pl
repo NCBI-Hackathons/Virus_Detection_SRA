@@ -2,13 +2,12 @@
 use strict;
 use warnings;
 use Getopt::Long;
-use Cwd;
 
 my $nopaired = 0;
 my $format   = "fastq";
 my $prefix   = "foo";         # foo_1.fq, foo_2.fq, foo.fq
 my $bamfile = "";
-my $dir = getcwd;
+my $dir = ".";
 GetOptions("t=s" => \$format,
            "prefix=s" => \$prefix,
            "nopaired" => \$nopaired,

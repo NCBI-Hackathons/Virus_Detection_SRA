@@ -1,4 +1,6 @@
-# Virus_Detection_SRA
+# SIDEARM	- Your weapon for viral discovery in metagenomes
+
+Sidearm searches the SRA database for viruses using the NCBI magicBLAST tool. It generates a table describing the number of alignments to each virus and various metrics such as the sequence coverage and average depth. The reads aligning to virus are assembled into viral contigs to attempt to generate complete viral genomes.
 
 ## Workflow
 
@@ -28,7 +30,7 @@ my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads -gapexte
 
 + to obtain lower % id alignments, lower gapextend and penalty options (Greg)
 
-Module 1c: Using a local database
+*Module 1c: Using a local database*
 
 + makeblastdb, initiate magicBLASTer
 + option to append to RefSeq
@@ -40,11 +42,11 @@ Module 1c: Using a local database
 
 Module 2: Extract reads from samfiles
 
-+ [sam2seqs.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/sam2seqs.pl)
++ [bam2seqs.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/bam2seqs.pl)
 + using '--nopaired' option since paired end reads are not supported yet
 
 ```bash
-sam2seqs.pl -t fasta --nopaired --prefix SRR073726 SRR073726.viral.1.1.genomic.sam 
+bam2seqs.pl -t fasta --nopaired --prefix SRR073726 -b SRR073726.viral.1.1.genomic.bam
 ```
 
 ```perl
@@ -61,11 +63,11 @@ sam2seqs.pl -t fasta --nopaired --prefix SRR073726 SRR073726.viral.1.1.genomic.s
 
 Module 3: Generate report from step 1
 
-+ [summarize_sam_by_ref.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/summarize_sam_by_ref.pl)
++ [summarize_bam_by_ref.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/summarize_bam_by_ref.pl)
 + using the '-v' option to only use the accession.version identifier in Viral.genomic.fna when looking for reference sequence identifier matches in the SAM file
 
 ```bash
-summarize_sam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.sam -g viral.1.1.genomic.fna > SRR073726.viral.1.1.genomic.sam.summarize.tsv
+summarize_bam_by_ref.pl -v -f SRR073726.viral.1.1.genomic.bam -g viral.1.1.genomic.fna
 ```
 
 ```perl
@@ -83,7 +85,7 @@ Module 4a: Adapter Trimming using cut adapt
 + [trim.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/trim.pl)
 
 ```bash
-trim.pl -g GCTCCTTTTTCTTTTTT -a CCCCCCCCCCCCCCC SRR073726.fa
+trim.pl -g GCTCCTTTTTCTTTTTT -a CCCCCCCCCCCCCCC -f SRR073726.fa
 ```
 
 *Module 4b: Adapter Prediction and Trimming using tag cleaner*
@@ -95,7 +97,7 @@ Module 5: Contig assembly with Abyss2
 + [assembly.pl](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/blob/master/bin/assembly.pl)
 
 ```bash
-assembly.pl SRR073726.fa.cutadapt.fa
+assembly.pl -f SRR073726.fa.cutadapt.fa
 ```
 
 ```perl
@@ -122,7 +124,7 @@ Module 3: Report of alignments
 
 | id        | vname          | vlen  | seqcov | avgdepth | aligns | avgMAPQ | avgScore | avgEditDist
 | ----------- | ----- | ----- | ---- | ------------- | ------------- | ----- | ---- | ---- |
-| NC_032111.1 | BeAn 58058 | 163005 | 0.4 | 3.0 | 18,741 | 255 | 22.7 | 0.3 | 
+| NC_032111.1 | BeAn 58058 | 163005 | 0.4 | 3.0 | 18,741 | 255 | 22.7 | 0.3 |
 | NC_001357.1 | HPV18 | 7857 | 19.8 | 48.5 | 9,658 | 255 | 39.1 | 0.05 |
 
 + [BeAn](https://www.ncbi.nlm.nih.gov/nuccore/NC_032111)

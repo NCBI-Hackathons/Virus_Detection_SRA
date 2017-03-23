@@ -3,8 +3,7 @@ use strict;
 use warnings;
 use Getopt::Long;
 use Bio::SeqIO;
-use Data::Dumper;
-use Cwd;
+use File::Basename;
 
 my $bamfile = '';
 my $genome  = '';
@@ -16,7 +15,7 @@ my $minalign   = 50;
 my $remove = 0;          # remove reads that have the same alignment score in the 2nd best hit (XS field)
 my $useAccVer = 0;       # use the Acc.Ver in the fasta identifier as the reference identifier
 my @tags = qw/AS NM XS/;    # tracking AlignmentScore and NumberMismatches
-my $dir = getcwd;
+my $dir = ".";
 GetOptions('annots|a=s{,}' => \@annots,
           'file|f=s'       => \$bamfile,
           'genome|g=s'     => \$genome,
@@ -60,7 +59,8 @@ refdepth(\%ref, $bamfile);
 # output
 #
 my $out;
-my $outputfile = "$dir/$bamfile.summarize.tsv";
+my $filename = basename($bamfile);
+my $outputfile = "$dir/$filename.summarize.tsv";
 open ($out, ">", $outputfile) or die ("Can't open $outputfile\n");
 print $out "id\tvname\tvlen\tseqcov\tavgdepth\taligns\tavgMAPQ\tavgScore\tavgEditDist";
 if ($pass) {
@@ -71,8 +71,8 @@ print $out "\n";
 foreach my $rid (keys %ref) {
   if (exists $ref{$rid}{nalign}) {
     my $rlen = $ref{$rid}{len};
-    
-    my $avgdepth = $ref{$rid}{td} / $rlen;          # average depth per base for genome    
+
+    my $avgdepth = $ref{$rid}{td} / $rlen;          # average depth per base for genome
     my $upos = $ref{$rid}{tp};
     my $seqcov   = $upos / $rlen * 100;    # percent of genome length that is covered by at least one read
 
@@ -84,7 +84,6 @@ foreach my $rid (keys %ref) {
       next if ($t eq 'XS');
       push(@tag_avg, $ref{$rid}{tags}{$t}{total} / $ref{$rid}{tags}{$t}{count});
     }
-        
     print $out join("\t", @annots, $rid, $ref{$rid}{name}, $rlen, $seqcov, $avgdepth, $nalign, $avgmapq, @tag_avg);
     if ($pass) {
       my $toPrint = ($nalign >= $minalign && $upos >= $minuniqpos) ? "\t1" : "\t0";
@@ -107,7 +106,7 @@ sub refdepth {
   while (<$in>) {    # each row in depth output is a successive nucleotide position in the reference sequence
     chomp;
     next if (/\t0$/);  # position has 0 read depth
-    
+
     my ($rid, $s, $d) = split(/\t/, $_);
     $$ref{$rid}{tp}++;           # total positions
     $$ref{$rid}{td} += $d;       # total depth
@@ -122,7 +121,7 @@ sub baminfo {
   open(my $in, "samtools view $file | ");
   while (<$in>) {
     chomp;
-        
+
     my ($qname, $flag, $rid, $pos, $mapq, $cigar, $rnext, $pnext, $tlen, $seq, $qual, @rest) = split (/\t/,$_);
     next if ($rid eq '*');    # unmapped read
 

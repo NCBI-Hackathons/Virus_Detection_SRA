@@ -1,0 +1,6 @@
+format: fasta
+nopaired: true
+prefix: SRR073726
+bamfile:
+  class: File
+  path: SRR073726.viral.1.1.genomic.bam

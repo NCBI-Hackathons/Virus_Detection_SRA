@@ -2,6 +2,7 @@
 use warnings;
 use strict;
 use Getopt::Long;
+use File::Basename;
 use Cwd;
 
 #reads; NO SUPPORT FOR PAIRED READS
@@ -13,14 +14,12 @@ my @prime3 = qw/AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
                 /;
 my $minlen = 30;
 my $rmdefadapters = 0;   # not implemented
-my $outputfile;
-my $dir = getcwd;
+my $dir = ".";
 my $seqs;
 GetOptions("fiveprime|g=s"    => \@prime5,
            "threeprime|a=s"   => \@prime3,
            "minlen|m=i"        => \$minlen,
            "rm-def-adapters|r" => \$rmdefadapters,
-           "outputfile|o=s"    => \$outputfile,
            "directory|d=s"     => \$dir,
            "seqs|f=s"          => \$seqs,
            );
@@ -30,7 +29,6 @@ $0 [options] FASTAFILE
   OPTIONS
     -g    Adapter list for 5' end ( -g ADAPTER1 ... )
     -a    Adapter list for 3' end ( -a ADAPTER2 ... )
-    -o    Output file (default: your input sequence file name with ".cutadapt.fa" appended)
     -m    Minimum length cutoff after trimming (default: 50)
     -r    NOT SUPPORTED. If supplied, default adapters (TruSeq) will be removed and not searched for.
 USAGE
@@ -52,9 +50,9 @@ foreach (@prime3) {
 }
 $threeprime = join (" ", @tmp);
 
-$outputfile //= "$seqs.cutadapt.fa";
-$outputfile = "$dir/$outputfile";
-my $logfile    = "$dir/$seqs.cutadapt.out";
+my $filename = basename($seqs);
+my $outputfile = "$dir/$filename.cutadapt.fa";
+my $logfile    = "$dir/$filename.cutadapt.out";
 my $command = "cutadapt $fiveprime $threeprime -m $minlen -o $outputfile $seqs > $logfile 2>&1";
 print "Running command: $command\n";
 `time $command`;

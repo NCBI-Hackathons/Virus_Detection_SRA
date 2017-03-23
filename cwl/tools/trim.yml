@@ -1,0 +1,5 @@
+prime5: GCTCCTTTTTCTTTTTT
+prime3: CCCCCCCCCCCCCCC
+seqs:
+  class: File
+  path: SRR073726.fa
