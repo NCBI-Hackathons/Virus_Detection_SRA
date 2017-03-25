@@ -3,7 +3,6 @@ use warnings;
 use strict;
 use Getopt::Long;
 use File::Basename;
-use Cwd;
 
 #reads; NO SUPPORT FOR PAIRED READS
 
@@ -14,18 +13,16 @@ my @prime3 = qw/AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
                 /;
 my $minlen = 30;
 my $rmdefadapters = 0;   # not implemented
-my $dir = ".";
 my $seqs;
 GetOptions("fiveprime|g=s"    => \@prime5,
            "threeprime|a=s"   => \@prime3,
            "minlen|m=i"        => \$minlen,
            "rm-def-adapters|r" => \$rmdefadapters,
-           "directory|d=s"     => \$dir,
            "seqs|f=s"          => \$seqs,
            );
 
 my $usage = <<USAGE;
-$0 [options] FASTAFILE
+$0 [options] -f FASTAFILE
   OPTIONS
     -g    Adapter list for 5' end ( -g ADAPTER1 ... )
     -a    Adapter list for 3' end ( -a ADAPTER2 ... )
@@ -51,8 +48,8 @@ foreach (@prime3) {
 $threeprime = join (" ", @tmp);
 
 my $filename = basename($seqs);
-my $outputfile = "$dir/$filename.cutadapt.fa";
-my $logfile    = "$dir/$filename.cutadapt.out";
+my $outputfile = "$filename.cutadapt.fa";
+my $logfile    = "$filename.cutadapt.out";
 my $command = "cutadapt $fiveprime $threeprime -m $minlen -o $outputfile $seqs > $logfile 2>&1";
 print "Running command: $command\n";
 `time $command`;

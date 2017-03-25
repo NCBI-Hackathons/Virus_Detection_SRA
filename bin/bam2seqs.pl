@@ -7,12 +7,10 @@ my $nopaired = 0;
 my $format   = "fastq";
 my $prefix   = "foo";         # foo_1.fq, foo_2.fq, foo.fq
 my $bamfile = "";
-my $dir = ".";
 GetOptions("t=s" => \$format,
            "prefix=s" => \$prefix,
            "nopaired" => \$nopaired,
            "bamfile|b=s" => \$bamfile,
-           "directory|d=s" => \$dir,
           );
 
 die "Please supply a bamfile (-b)\n" if (!$bamfile);
@@ -22,10 +20,10 @@ my ($one, $two, $single);
 my $suffix = ($format eq "fastq") ? ".fq" : ".fa";
 
 unless ($nopaired) {
-  open ($one, ">", $dir . "/" . $prefix . "_1" . $suffix) or die "";
-  open ($two, ">", $dir . "/" . $prefix . "_2" . $suffix) or die "";
+  open ($one, ">", $prefix . "_1" . $suffix) or die "";
+  open ($two, ">", $prefix . "_2" . $suffix) or die "";
 }
-open ($single, ">", $dir . "/" . $prefix . $suffix) or die "";
+open ($single, ">", $prefix . $suffix) or die "";
 
 open(my $in, "samtools view $bamfile | ");
 while (<$in>) {

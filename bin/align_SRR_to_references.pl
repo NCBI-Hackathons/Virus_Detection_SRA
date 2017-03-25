@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use Getopt::Long;
 use File::Basename; # core
-use Cwd;  # core
-
 
 my ($srr, $blastdb) = ("", "");
 
@@ -20,7 +18,6 @@ my ($gapextend, $penalty, $wordsize, $score); # #(4, -4, 20, 24);
 my $fast = 0;
 my $weak = 0;
 my $threads = 2;
-my $dir = getcwd;
 GetOptions ("srr|s=s"  => \$srr,
             "blastdb|b=s" => \$blastdb,
             "fast"          => \$fast,
@@ -30,7 +27,6 @@ GetOptions ("srr|s=s"  => \$srr,
             "wordsize|w=i" => \$wordsize,
             "score|c=i" => \$score,
             "threads|t=i" => \$threads,
-            "directory|d=s" => \$dir,
             );
 if ($fast) {
   $wordsize = 20;
@@ -76,10 +72,9 @@ if ($? > 0) {
   exit;
 }
 
-my ($filename, $directories, $suffix) = fileparse($blastdb);
-#my $samfile = "$srr.$filename.sam";
+my $filename = basename($blastdb);
 my $bamfile = "$srr.$filename.bam";
-my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads | samtools view -bS - | samtools sort -o $dir/$bamfile";
+my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads | samtools view -bS - | samtools sort -o $bamfile";
 
 print "Running command: $command\n";
 `time $command`;

@@ -1,7 +1,8 @@
+#!/usr/bin/env cwl-runner --preserve-environment PERL5LIB
 cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: summarize_bam_by_ref.pl
-arguments: ["-d", $(runtime.outdir)]
+
 inputs:
   accver:
     type: boolean?

@@ -15,7 +15,6 @@ my $minalign   = 50;
 my $remove = 0;          # remove reads that have the same alignment score in the 2nd best hit (XS field)
 my $useAccVer = 0;       # use the Acc.Ver in the fasta identifier as the reference identifier
 my @tags = qw/AS NM XS/;    # tracking AlignmentScore and NumberMismatches
-my $dir = ".";
 GetOptions('annots|a=s{,}' => \@annots,
           'file|f=s'       => \$bamfile,
           'genome|g=s'     => \$genome,
@@ -24,7 +23,6 @@ GetOptions('annots|a=s{,}' => \@annots,
           'pass|p'         => \$pass,
           'remove|r'       => \$remove,
           'useAccVer|v'    => \$useAccVer,
-          'directory|d=s'  => \$dir,
           );
 if ($bamfile eq ""){ print "Please supply '-f BAMFILE' on command line\n"; exit; }
 if ($genome eq "") { print "Please supply '-g GENOME' on command line\n"; exit; }
@@ -60,7 +58,7 @@ refdepth(\%ref, $bamfile);
 #
 my $out;
 my $filename = basename($bamfile);
-my $outputfile = "$dir/$filename.summarize.tsv";
+my $outputfile = "$filename.summarize.tsv";
 open ($out, ">", $outputfile) or die ("Can't open $outputfile\n");
 print $out "id\tvname\tvlen\tseqcov\tavgdepth\taligns\tavgMAPQ\tavgScore\tavgEditDist";
 if ($pass) {

@@ -1,7 +1,8 @@
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: trim.pl
-arguments: ["-d", $(runtime.outdir)]
+
 inputs:
   prime5:
     type: string?
@@ -15,6 +16,7 @@ inputs:
     type: File
     inputBinding:
       prefix: -f
+
 outputs:
   outputfile:
     type: File
@@ -24,5 +26,3 @@ outputs:
     type: File
     outputBinding:
       glob: "*.cutadapt.out"
-
-

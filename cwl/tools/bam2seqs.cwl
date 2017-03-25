@@ -1,7 +1,8 @@
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: bam2seqs.pl
-arguments: ["-d", $(runtime.outdir)]
+
 inputs:
   format:
     type: string?
@@ -19,6 +20,7 @@ inputs:
     type: File
     inputBinding:
       prefix: -b
+
 outputs:
   outputfile:
     type: File
