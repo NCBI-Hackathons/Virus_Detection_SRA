@@ -1,10 +1,24 @@
+#!/usr/bin/env cwl-runner --preserve-environment BLASTDB --preserve-environment PERL5LIB
 cwlVersion: v1.0
 class: Workflow
+
 inputs:
-#  bam: File
-  refs: File
-  blastdb: string
+  # align
   srr: string
+  blastdb: string
+  threads: int
+
+  # bam2seqs
+  format: string
+  nopaired: boolean
+
+  # summarize_bam_by_ref
+  accver: boolean
+  genomefile: File
+
+  # trim
+  prime5: string
+  prime3: string
 
 outputs:
   report_tsv:
@@ -16,23 +30,26 @@ outputs:
 
 steps:
   alignsrr:
-    run: align_SRR_to_references
+    run: align_SRR_to_references.cwl
     in:
       srr: srr
       blastdb: blastdb
+      threads: threads
     out: [outputfile]
 
   summarizebam:
     run: summarize_bam_by_ref.cwl
     in:
       bamfile: alignsrr/outputfile
-      genomefile: refs
+      genomefile: genomefile
     out: [outputfile]
 
   bam2seqs:
     run: bam2seqs.cwl
     in:
       bamfile: alignsrr/outputfile
+      format: format
+      nopaired: nopaired
     out: [outputfile]
 
   trim:
