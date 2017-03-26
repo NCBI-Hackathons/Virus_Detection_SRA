@@ -1,3 +1,18 @@
-bam:
+# align
+srr: SRR1553459
+blastdb: ebolazaire
+threads: 4
+
+# bam2seqs
+format: fasta
+nopaired: true
+
+# summ
+accver: true
+genomefile:
   class: File
-  path: SRR073726.viral.1.1.genomic.bam
+  path: GCF_000848505.1_ViralProj14703_genomic.fna
+
+# trim (Primer B)
+#prime5: GTTTCCCAGTCACGATA
+#prime3: TATCGTGACTGGGAAAC
