@@ -21,6 +21,15 @@ inputs:
   prime3: string
 
 outputs:
+  bamfile:
+    type: File
+    outputSource: alignsrr/outputfile
+#  trimlog:
+#    type: File
+#    outputSource: trim/logfile
+#  assemblylog:
+#    type: File
+#    outputSource: assembly/logfile
   report_tsv:
     type: File
     outputSource: summarizebam/outputfile
@@ -53,7 +62,7 @@ steps:
     out: [outputfile]
 
   trim:
-    run: trim.cwl 
+    run: trim.cwl
     in:
       seqs: bam2seqs/outputfile
     out: [outputfile]
