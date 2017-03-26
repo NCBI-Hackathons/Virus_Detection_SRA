@@ -24,15 +24,15 @@ outputs:
   bamfile:
     type: File
     outputSource: alignsrr/outputfile
-#  trimlog:
-#    type: File
-#    outputSource: trim/logfile
-#  assemblylog:
-#    type: File
-#    outputSource: assembly/logfile
   report_tsv:
     type: File
     outputSource: summarizebam/outputfile
+  trimlog:
+    type: File
+    outputSource: trim/logfile
+  assemblylog:
+    type: File
+    outputSource: assembly/logfile
   viral_contigs:
     type: File
     outputSource: assembly/contigs
@@ -65,10 +65,10 @@ steps:
     run: trim.cwl
     in:
       seqs: bam2seqs/outputfile
-    out: [outputfile]
+    out: [outputfile, logfile]
 
   assembly:
     run: assembly.cwl
     in:
       seqs: trim/outputfile
-    out: [contigs]
+    out: [contigs, logfile]
