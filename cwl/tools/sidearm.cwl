@@ -9,7 +9,7 @@ inputs:
   threads: int
 
   # bam2seqs
-  format: string
+  seqformat: string
   nopaired: boolean
 
   # summarize_bam_by_ref
@@ -30,6 +30,9 @@ outputs:
   trimlog:
     type: File
     outputSource: trim/logfile
+  trimseqs:
+    type: File
+    outputSource: trim/outputfile
   assemblylog:
     type: File
     outputSource: assembly/logfile
@@ -57,7 +60,7 @@ steps:
     run: bam2seqs.cwl
     in:
       bamfile: alignsrr/outputfile
-      format: format
+      seqformat: seqformat
       nopaired: nopaired
     out: [outputfile]
 

@@ -4,18 +4,14 @@ class: CommandLineTool
 baseCommand: bam2seqs.pl
 
 inputs:
-  format:
+  seqformat:
     type: string?
     inputBinding:
-      prefix: -t
+      prefix: -f
   nopaired:
     type: boolean?
     inputBinding:
       prefix: --nopaired
-  prefix:
-    type: string?
-    inputBinding:
-      prefix: --prefix
   bamfile:
     type: File
     inputBinding:

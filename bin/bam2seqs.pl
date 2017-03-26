@@ -6,10 +6,8 @@ use File::Basename;
 
 my $nopaired = 0;
 my $format   = "fastq";
-my $prefix   = "foo";         # foo_1.fq, foo_2.fq, foo.fq
 my $bamfile = "";
-GetOptions("t=s" => \$format,
-           "prefix=s" => \$prefix,
+GetOptions("format|f=s" => \$format,
            "nopaired" => \$nopaired,
            "bamfile|b=s" => \$bamfile,
           );

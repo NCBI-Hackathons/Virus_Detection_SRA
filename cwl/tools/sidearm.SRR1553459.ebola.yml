@@ -4,7 +4,7 @@ blastdb: ebolazaire
 threads: 4
 
 # bam2seqs
-format: fasta
+seqformat: fasta
 nopaired: true
 
 # summ
