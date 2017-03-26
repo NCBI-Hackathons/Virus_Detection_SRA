@@ -17,8 +17,8 @@ inputs:
   genomefile: File
 
   # trim
-  prime5: string
-  prime3: string
+  prime5: string?
+  prime3: string?
 
 outputs:
   bamfile:
