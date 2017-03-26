@@ -13,7 +13,7 @@ inputs:
   nopaired: boolean
 
   # summarize_bam_by_ref
-  accver: boolean
+  accver: boolean?
   genomefile: File
 
   # trim
@@ -54,6 +54,7 @@ steps:
     in:
       bamfile: alignsrr/outputfile
       genomefile: genomefile
+      accver: accver
     out: [outputfile]
 
   bam2seqs:
