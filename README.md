@@ -52,7 +52,7 @@ The log files for the trim and assembly modules are also created
 
 ### Expected Results
 
-Open the `summarize.tsv` file in a spreadsheet program. The number of alignments to Ebola virus should be ~15,000 (column 'aligns'), sequence coverage ~98% (column 'seqcov'), and average depth ~75 (column 'avgdepth')
+Open the `summarize.tsv` file in a spreadsheet program. The number of alignments to Ebola virus should be ~15,000 (column 'aligns'), sequence coverage ~98% (column 'seqcov'), and average depth ~75 (column 'avgdepth'). The longest contig is ~12,500bp and a [BLASTN search](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome) shows that it is Ebola virus.
 
 ## Example workflow for all NCBI RefSeq viruses
 
