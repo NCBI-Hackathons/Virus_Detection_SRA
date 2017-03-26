@@ -79,12 +79,14 @@ sidearm.cwl sidearm.SRR073726.viral11genomic.yml
 
 Report of alignments (`summarize.tsv`)
 
-| id        | vname          | vlen  | seqcov | avgdepth | aligns | avgMAPQ | avgScore | avgEditDist
+| id          | vname    | vlen  | seqcov | avgdepth | aligns | avgMAPQ | avgScore | avgEditDist
 | ----------- | ----- | ----- | ---- | ------------- | ------------- | ----- | ---- | ---- |
-| NC_032111.1 | BeAn 58058 | 163005 | 0.4 | 3.0 | 18,741 | 255 | ig should be >= 600bp. Run a BLASTN with this sequence and it should align to Human Papillomavirus 18. However, obtaining this result depends on the software and reference sequences versions that you used.
+| NC_032111.1 | BeAn 58058 virus | 163005 | 0.78 | 6.7 | 51,012 | 255 | 22.7 | 0.34 |
+| NC_001357.1 | HPV18 | 7857 | 22.2 | 130.7 | 26,067 | 255 | 39.1 | 0.05 |
+
+The longest contig should be ~600bp. However, obtaining this result depends on the software and reference sequences versions that you used. A [BLASTN search](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome) with the longest contig sequence should show that it is Human Papillomavirus 18.
 
 ## Troubleshooting
 
 + Please submit an [issue](https://github.com/NCBI-Hackathons/Virus_Detection_SRA/issues) if you run into any problems installing or running this software.
-
 
