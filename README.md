@@ -13,8 +13,8 @@ git clone https://github.com/NCBI-Hackathons/Virus_Detection_SRA
 
 Install the following:
 
-+ [magicblast (>= 1.2.0)](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/magicblast/LATEST)
-+ [samtools (>= 1.4](http://samtools.sourceforge.net/)
++ [magicblast (>= 1.2.0)](https://ftp.ncbi.nlm.nih.gov/blast/executables/magicblast/LATEST)
++ [samtools (>= 1.4)](http://samtools.sourceforge.net/)
 + [bioperl (>= 1.7)](http://search.cpan.org/~cjfields/BioPerl-1.007001/BioPerl.pm)
 + [cutadapt (>=
 1.12)](http://cutadapt.readthedocs.io/en/stable/installation.html)
@@ -64,12 +64,12 @@ makeblastdb -dbtype nucl -in viral.1.1.genomic.fna -out viral.1.1.genomic -parse
 export BLASTDB=$BLASTDB:`pwd`
 ```
 
-Edit sidearm.SRR1553459.ebola.yml with the following changes and save it as sidearm.SRR073726.viral11genomic.yml
+Edit sidearm.SRR1553459.ebola.yml with the following changes and save it as sidearm.SRR073726.viral11genomic.yml:
 + srr: SRR073726
 + blastdb: viral.1.1.genomic
 + path: viral.1.1.genomic.fna
 
-The execute Sidearm. Depending on your computer, this will take about 1 hour.
+Then execute Sidearm with the command line below. Depending on your computer, this will take about 1 hour.
 
 ```
 sidearm.cwl sidearm.SRR073726.viral11genomic.yml
