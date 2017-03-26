@@ -21,8 +21,8 @@ outputs:
   outputfile:
     type: File
     outputBinding:
-      glob: "*.cutadapt.fa"
+      glob: "*.trim.fa"
   logfile:
     type: File
     outputBinding:
-      glob: "*.cutadapt.out"
+      glob: "*.trim.log"

@@ -48,8 +48,8 @@ foreach (@prime3) {
 $threeprime = join (" ", @tmp);
 
 my $filename = basename($seqs);
-my $outputfile = "$filename.cutadapt.fa";
-my $logfile    = "$filename.cutadapt.out";
+my $outputfile = "$filename.trim.fa";
+my $logfile    = "$filename.trim.log";
 my $command = "cutadapt $fiveprime $threeprime -m $minlen -o $outputfile $seqs > $logfile 2>&1";
 print "Running command: $command\n";
 `time $command`;

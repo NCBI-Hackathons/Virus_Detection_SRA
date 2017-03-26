@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
+use File::Basename;
 
 my $nopaired = 0;
 my $format   = "fastq";
@@ -19,11 +20,12 @@ my %preads;   # cache reads until you have both reads of a pair so you can outpu
 my ($one, $two, $single);
 my $suffix = ($format eq "fastq") ? ".fq" : ".fa";
 
+my $filename = basename($bamfile);
 unless ($nopaired) {
-  open ($one, ">", $prefix . "_1" . $suffix) or die "";
-  open ($two, ">", $prefix . "_2" . $suffix) or die "";
+  open ($one, ">", $filename . "_1" . $suffix) or die "";
+  open ($two, ">", $filename . "_2" . $suffix) or die "";
 }
-open ($single, ">", $prefix . $suffix) or die "";
+open ($single, ">", $filename . $suffix) or die "";
 
 open(my $in, "samtools view $bamfile | ");
 while (<$in>) {

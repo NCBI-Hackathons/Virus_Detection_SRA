@@ -12,8 +12,8 @@ outputs:
   contigs:
     type: File
     outputBinding:
-      glob: "*.contigs"
+      glob: "*.assembly.fa"
   logfile:
     type: File
     outputBinding:
-      glob: "*.abyss.out"
+      glob: "*.assembly.log"
