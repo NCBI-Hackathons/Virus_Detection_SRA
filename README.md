@@ -1,5 +1,5 @@
 
-+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/NCBI-Hackathons-Virus_Detection_SRA/Lobby)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/NCBI-Hackathons-Virus_Detection_SRA/Lobby)
 
 # SIDEARM - Your weapon for viral discovery in the NCBI SRA database
 
