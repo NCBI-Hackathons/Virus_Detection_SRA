@@ -57,6 +57,8 @@ The log files for the trim and assembly modules are also created
 
 Open the `summarize.tsv` file in a spreadsheet program. The number of alignments to Ebola virus should be ~15,000 (column 'aligns'), sequence coverage ~98% (column 'seqcov'), and average depth ~75 (column 'avgdepth'). The longest contig is ~12,500bp and a [BLASTN search](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome) shows that it is Ebola virus.
 
+The avg (average) fields are the average MAPQ (or Score or EditDist) across the alignments for each subject in the BAM file. MAPQ, Score and EditDist are taken from field 5, the AS flag, and the NM flag in the BAM file, respectively.
+
 ## Example workflow for all NCBI RefSeq viruses
 
 ```bash
