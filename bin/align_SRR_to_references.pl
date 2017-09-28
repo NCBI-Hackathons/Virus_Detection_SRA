@@ -7,14 +7,14 @@ use File::Basename; # core
 
 my ($srr, $blastdb) = ("", "");
 
-# magicblast defaults
+# magicblast defaults (based on version 1.2)
 # for lower percent identity:
 #   gapextend: 8 => 4
 #   penalty: -8 => -4
 # for faster alignments:
 #   wordsize: 16 => 20
 #   score: 20 => 24
-my ($gapextend, $penalty, $wordsize, $score); # #(4, -4, 20, 24);
+my ($gapextend, $penalty, $wordsize, $score) = (8, -8, 16, 20);  # wordsize must be >= 16
 my $fast = 0;
 my $weak = 0;
 my $threads = 2;
@@ -74,9 +74,10 @@ if ($? > 0) {
 
 my $filename = basename($blastdb);
 my $bamfile = "$srr.$filename.bam";
-my $command = "$magicblast -db $blastdb -sra $srr -num_threads $threads | samtools view -bS - | samtools sort -o $bamfile";
+my $command = "$magicblast -gapextend $gapextend -word_size $wordsize -penalty $penalty -score $score -db $blastdb -sra $srr -num_threads $threads | samtools view -bS - | samtools sort -o $bamfile";
 
-print "Running command: $command\n";
-`time $command`;
+#print "Running command: $command\n";
+#`time $command`;
+`$command`;
 
 exit 0;
